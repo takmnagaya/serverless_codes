@@ -67,8 +67,10 @@ plugins:
   - serverless-python-requirements
 
 functions:
-  hello:
-    handler: handler.hello
+  dispatcher:
+    handler: handler.create_or_delete_alarms
+    events:
+      - sns: 'auto-scaling-lifecycle'
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
