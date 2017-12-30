@@ -53,6 +53,8 @@ provider:
 #  exclude:
 #    - exclude-me.py
 #    - exclude-me-dir/**
+plugins:
+  - serverless-python-requirements
 
 functions:
   hello:
