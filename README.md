@@ -9,7 +9,7 @@ npm bin serverless
 
 ~~~
 $ docker build . -t serverless_codes
-$ docker run -it serverless_codes
+$ docker run -v /path/to/serverless_codes:/myapp -it serverless_codes
 # dockerコンテナにログイン!
 ~~~
 
