@@ -11,6 +11,10 @@ RUN apt-get update -y && \
 RUN mkdir -p /myapp
 ADD . /myapp
 WORKDIR /myapp
+
+RUN mkdir -p /root/.aws
+ADD ./.aws /root/.aws
+
 RUN npm install
 ENV PATH /myapp/node_modules/.bin/:$PATH
 CMD bash

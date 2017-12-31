@@ -19,6 +19,11 @@ IAMユーザのアクセスキー、シークレットキーを用意し、コ�
 $ serverless config credentials --provider aws --key xxxxxxxxxxxxxx --secret xxxxxxxxxxxxx
 ~~~
 
+Macで使用しているアクセスキー、シークレットキーをそのまま使う場合は、
+~~~
+$ cp ~/.aws/* /path/to/serverless_codes/.aws
+~~~
+
 ## デプロイ
 コンテナ内で下記コマンド実行
 ~~~
