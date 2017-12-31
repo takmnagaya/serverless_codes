@@ -1,1 +1,4 @@
 node_modules/
+# AWS認証情報
+!.aws/.keep
+.aws/
