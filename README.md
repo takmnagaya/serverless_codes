@@ -1,9 +1,5 @@
+# 参考
 > [Serverless FrameworkでAWS Lamda関数を作成する](https://qiita.com/Esfahan/items/736d09f732fa619d2410)
-
-~~~
-npm install
-npm bin serverless
-~~~
 
 # Dockerでの開発環境の構築
 
@@ -30,3 +26,18 @@ $ cp ~/.aws/* /path/to/serverless_codes/.aws
 $ cd path/to/function
 $ sls deploy
 ~~~
+
+# lambda関数管理
+
+## /auto-scaling-lifecycle-hook
+Auto Scalingライフサイクルフックイベントで実行される関数を管理する。
+
+- インスタンス起動時にCloudWatchメトリクスを作成する。
+- インスタンス終了時にCloudWatchメトリクスを削除する。
+
+## /deploy-notification-to-slack
+CodeDeployの完了時に通知されるSNSで実行される関数を管理する。
+
+- SlackにCodeDeployの実行結果を通知する。
+
+:warning: 環境変数`SLACK_WEBHOOK_URL`を各自設定してください。
