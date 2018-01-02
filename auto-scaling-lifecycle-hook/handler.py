@@ -5,10 +5,10 @@ import os
 
 
 class AutoScalingLifeCycleEvent:
-    def __init__(self, AutoScalingGroupName, EC2InstanceId, Event):
+    def __init__(self, AutoScalingGroupName, EC2InstanceId, LifecycleTransition):
         self.AutoScalingGroupName = AutoScalingGroupName
         self.EC2InstanceId = EC2InstanceId
-        self.Event = Event
+        self.LifecycleTransition = LifecycleTransition
 
     def cpu_threshold(self):
         return 80
@@ -37,11 +37,11 @@ class AutoScalingLifeCycleEvent:
         return 'System/Linux-MemoryUtilization({0})@{1}-{2}'.format(self.cpu_threshold(), self.EC2InstanceId,
                                                                     self.AutoScalingGroupName)
 
-    def is_terminated(self):
-        return re.match("autoscaling:EC2_INSTANCE_TERMINATE", self.Event)
+    def is_terminating(self):
+        return re.match("autoscaling:EC2_INSTANCE_TERMINATING", self.LifecycleTransition)
 
-    def is_launched(self):
-        return re.match("autoscaling:EC2_INSTANCE_LAUNCH", self.Event)
+    def is_launching(self):
+        return re.match("autoscaling:EC2_INSTANCE_LAUNCHING", self.LifecycleTransition)
 
     def put_alarm_cpu_utilization(self):
         metric = self.cloudwatch().Metric('AWS/EC2', 'CPUUtilization')
@@ -162,8 +162,8 @@ def sns_message(event):
 def create_or_delete_alarms(event, context):
     message = sns_message(event)
     print(message)
-    hook_event = AutoScalingLifeCycleEvent(message['AutoScalingGroupName'], message['EC2InstanceId'], message['Event'])
-    if hook_event.is_terminated():
+    hook_event = AutoScalingLifeCycleEvent(message['AutoScalingGroupName'], message['EC2InstanceId'], message['LifecycleTransition'])
+    if hook_event.is_terminating():
         hook_event.delete_alarms()
-    elif hook_event.is_launched():
+    elif hook_event.is_launching():
         hook_event.put_alarms()
