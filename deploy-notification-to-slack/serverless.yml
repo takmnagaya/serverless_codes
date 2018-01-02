@@ -59,6 +59,8 @@ plugins:
 functions:
   dispatcher:
     handler: handler.notify_to_slack
+    name: ${self:service}
+    description: Notify deployment to slack
     events:
       - sns: 'deploy-notification'
 #    The following are a few example events you can configure
