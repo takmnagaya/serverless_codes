@@ -1,6 +1,7 @@
 import json
 import boto3
 import re
+import os
 
 
 class AutoScalingLifeCycleEvent:
@@ -22,7 +23,7 @@ class AutoScalingLifeCycleEvent:
         return boto3.resource('cloudwatch')
 
     def cloudwatch_alarms_sns(self):
-        return 'arn:aws:sns:ap-northeast-1:000000000000:cloudwatch-alarms'
+        return os.environ['CLOUDWATCH_ALARMS_SNS_ARN']
 
     def cpu_utilization_alarm_name(self):
         return 'AWS/EC2-CPUUtilization({0})@{1}-{2}'.format(self.cpu_threshold(), self.EC2InstanceId,

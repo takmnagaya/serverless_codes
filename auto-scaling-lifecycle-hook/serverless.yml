@@ -73,6 +73,8 @@ functions:
     description: Create or delete CloudWatch alarms when an EC2 instance is started or terminated.
     events:
       - sns: 'auto-scaling-lifecycle'
+    environment:
+      CLOUDWATCH_ALARMS_SNS_ARN: 'arn:aws:sns:ap-northeast-1:000000000000:cloudwatch-alarms'
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
