@@ -36,6 +36,7 @@ Auto Scalingライフサイクルフックイベントで実行される関数�
 - インスタンス終了時にCloudWatchメトリクスを削除する。
 
 :warning: 環境変数`CLOUDWATCH_ALARMS_SNS_ARN`を各自設定してください。
+:warning: Auto Scalingライフサイクルフックを作成しておく必要がある。`put-lifecycle-hook.sh`にAWS CLIのコマンドを用意しています。
 
 ## /deploy-notification-to-slack
 CodeDeployの完了時に通知されるSNSで実行される関数を管理する。
