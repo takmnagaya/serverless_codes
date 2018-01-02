@@ -44,3 +44,4 @@ CodeDeployの完了時に通知されるSNSで実行される関数を管理す�
 - SlackにCodeDeployの実行結果を通知する。
 
 :warning: 環境変数`SLACK_WEBHOOK_URL`を各自設定してください。
+:warning: CodeDeployでSNS通知のトリガーを作成します。https://docs.aws.amazon.com/ja_jp/codedeploy/latest/userguide/monitoring-sns-event-notifications-create-trigger.html#monitoring-sns-event-notifications-create-trigger-cli
