@@ -68,7 +68,9 @@ plugins:
 
 functions:
   dispatcher:
+    name: ${self:service}-create-delete-cloudwatch-alarms
     handler: handler.create_or_delete_alarms
+    description: Create or delete CloudWatch alarms when an EC2 instance is started or terminated.
     events:
       - sns: 'auto-scaling-lifecycle'
 
