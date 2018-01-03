@@ -15,6 +15,12 @@ class DeployEvent:
     def is_failed(self):
         return self.status == 'FAILED'
 
+    def error_code(self):
+        return json.loads(self.errorInformation)['ErrorCode']
+
+    def error_message(self):
+        return json.loads(self.errorInformation)['ErrorMessage']
+
     def event_message(self):
         if self.is_failed():
             message = """
@@ -23,7 +29,7 @@ class DeployEvent:
             ErrorCode: {3}
             ErrorMessage: {4}
             """.format(self.applicationName, self.deploymentGroupName, self.deploymentId,
-                       self.errorInformation['ErrorCode'], self.errorInformation['ErrorMessage'])
+                       self.error_code(), self.error_message())
         else:
             message = """
             @channel {0} {1}のデプロイに成功しました
