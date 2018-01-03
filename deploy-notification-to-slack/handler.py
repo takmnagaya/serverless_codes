@@ -13,7 +13,7 @@ class DeployEvent:
         self.errorInformation = errorInformation
 
     def is_failed(self):
-        return self.status == 'Failed'
+        return self.status == 'FAILED'
 
     def event_message(self):
         if self.is_failed():
