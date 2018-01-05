@@ -52,8 +52,10 @@ def webhook_icon(event):
 def notify_to_slack(event, context):
     message = sns_message(event)
     print(message)
-    deploy_event = DeployEvent(message['eventTriggerName'], message['applicationName'], message['deploymentId'],
-                               message['deploymentGroupName'], message['status'], message['errorInformation'])
+    deploy_event = DeployEvent(message.get('eventTriggerName'), message.get('applicationName'),
+                               message.get('deploymentId'),
+                               message.get('deploymentGroupName'), message.get('status'),
+                               message.get('errorInformation'))
     requests.post(os.environ['SLACK_WEBHOOK_URL'], data=json.dumps({
         'text': deploy_event.event_message(),
         'link_names': 1,  # メンションを有効にする
