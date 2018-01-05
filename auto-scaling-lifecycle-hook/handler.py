@@ -162,7 +162,8 @@ def sns_message(event):
 def create_or_delete_alarms(event, context):
     message = sns_message(event)
     print(message)
-    hook_event = AutoScalingLifeCycleEvent(message['AutoScalingGroupName'], message['EC2InstanceId'], message['Event'])
+    hook_event = AutoScalingLifeCycleEvent(message.get('AutoScalingGroupName'), message.get('EC2InstanceId'),
+                                           message.get('Event'))
     if hook_event.is_terminated():
         hook_event.delete_alarms()
     elif hook_event.is_launched():
