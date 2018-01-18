@@ -24,16 +24,20 @@ class DeployEvent:
     def event_message(self):
         if self.is_failed():
             message = """
-            @channel {0} {1}のデプロイに失敗しました
-            deploymentId: {2}
-            ErrorCode: {3}
-            ErrorMessage: {4}
+@channel デプロイに失敗しました
+applicationName: {0}
+deploymentGroupName: {1}
+deploymentId: {2}
+ErrorCode: {3}
+ErrorMessage: {4}
             """.format(self.applicationName, self.deploymentGroupName, self.deploymentId,
                        self.error_code(), self.error_message())
         else:
             message = """
-            @channel {0} {1}のデプロイに成功しました
-            deploymentId: {2}
+@channel デプロイに成功しました
+applicationName: {0}
+deploymentGroupName: {1}
+deploymentId: {2}
             """.format(self.applicationName, self.deploymentGroupName, self.deploymentId)
         return message
 
