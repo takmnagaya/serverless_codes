@@ -23,7 +23,7 @@ provider:
 
 # you can overwrite defaults here
 #  stage: dev
-#  region: us-east-1
+  region: ap-northeast-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -53,10 +53,16 @@ provider:
 #  exclude:
 #    - exclude-me.py
 #    - exclude-me-dir/**
+plugins:
+  - serverless-python-requirements
 
 functions:
-  hello:
-    handler: handler.hello
+  dispatcher:
+    handler: handler.notify_to_slack
+    name: ${self:service}
+    description: Notify ECS task erros to slack
+#    events:
+#      - sns: 'insight-prod-task-error-notification-topic'
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -90,7 +96,8 @@ functions:
 #    Define function environment variables here
 #    environment:
 #      variable2: value2
-
+    environment:
+      SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/xxxxxxxxxxxxxxxx'
 # you can add CloudFormation resource templates here
 #resources:
 #  Resources:
