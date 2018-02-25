@@ -23,7 +23,10 @@ class AutoScalingLifeCycleEvent:
         return boto3.resource('cloudwatch')
 
     def cloudwatch_alarms_sns(self):
-        return os.environ['CLOUDWATCH_ALARMS_SNS_ARN']
+        if re.match('prod', self.AutoScalingGroupName):
+            return os.environ['CLOUDWATCH_PROD_ALARMS_SNS_ARN']
+        else:
+            return os.environ['CLOUDWATCH_ALARMS_SNS_ARN']
 
     def cpu_utilization_alarm_name(self):
         return 'AWS/EC2-CPUUtilization({0})@{1}-{2}'.format(self.cpu_threshold(), self.EC2InstanceId,
