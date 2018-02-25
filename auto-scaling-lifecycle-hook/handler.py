@@ -50,7 +50,9 @@ class AutoScalingLifeCycleEvent:
         metric = self.cloudwatch().Metric('AWS/EC2', 'CPUUtilization')
         metric.put_alarm(
             AlarmName=self.cpu_utilization_alarm_name(),
-            AlarmDescription='CPUUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(self.cpu_threshold(), self.EC2InstanceId, self.AutoScalingGroupName),
+            AlarmDescription='CPUUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(self.cpu_threshold(),
+                                                                                            self.EC2InstanceId,
+                                                                                            self.AutoScalingGroupName),
             OKActions=[
                 self.cloudwatch_alarms_sns()
             ],
@@ -76,8 +78,9 @@ class AutoScalingLifeCycleEvent:
         metric = self.cloudwatch().Metric('System/Linux', 'DiskSpaceUtilization')
         metric.put_alarm(
             AlarmName=self.disk_space_utilization_alarm_name(),
-            AlarmDescription='DiskSpaceUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(self.disk_space_threshold(),
-                                                                            self.EC2InstanceId, self.AutoScalingGroupName),
+            AlarmDescription='DiskSpaceUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(
+                self.disk_space_threshold(),
+                self.EC2InstanceId, self.AutoScalingGroupName),
             OKActions=[
                 self.cloudwatch_alarms_sns()
             ],
@@ -111,7 +114,9 @@ class AutoScalingLifeCycleEvent:
         metric = self.cloudwatch().Metric('System/Linux', 'MemoryUtilization')
         metric.put_alarm(
             AlarmName=self.memory_utilization_alarm_name(),
-            AlarmDescription='MemoryUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(self.memory_threshold(), self.EC2InstanceId, self.AutoScalingGroupName),
+            AlarmDescription='MemoryUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(self.memory_threshold(),
+                                                                                               self.EC2InstanceId,
+                                                                                               self.AutoScalingGroupName),
             OKActions=[
                 self.cloudwatch_alarms_sns()
             ],
