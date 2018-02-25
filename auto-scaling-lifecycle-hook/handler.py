@@ -23,7 +23,10 @@ class AutoScalingLifeCycleEvent:
         return boto3.resource('cloudwatch')
 
     def cloudwatch_alarms_sns(self):
-        return os.environ['CLOUDWATCH_ALARMS_SNS_ARN']
+        if re.match('prod', self.AutoScalingGroupName):
+            return os.environ['CLOUDWATCH_PROD_ALARMS_SNS_ARN']
+        else:
+            return os.environ['CLOUDWATCH_ALARMS_SNS_ARN']
 
     def cpu_utilization_alarm_name(self):
         return 'AWS/EC2-CPUUtilization({0})@{1}-{2}'.format(self.cpu_threshold(), self.EC2InstanceId,
@@ -47,7 +50,9 @@ class AutoScalingLifeCycleEvent:
         metric = self.cloudwatch().Metric('AWS/EC2', 'CPUUtilization')
         metric.put_alarm(
             AlarmName=self.cpu_utilization_alarm_name(),
-            AlarmDescription='CPUUtilization {0} > actual@{1}'.format(self.cpu_threshold(), self.EC2InstanceId),
+            AlarmDescription='CPUUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(self.cpu_threshold(),
+                                                                                            self.EC2InstanceId,
+                                                                                            self.AutoScalingGroupName),
             OKActions=[
                 self.cloudwatch_alarms_sns()
             ],
@@ -73,8 +78,9 @@ class AutoScalingLifeCycleEvent:
         metric = self.cloudwatch().Metric('System/Linux', 'DiskSpaceUtilization')
         metric.put_alarm(
             AlarmName=self.disk_space_utilization_alarm_name(),
-            AlarmDescription='DiskSpaceUtilization {0} > actual@{1}'.format(self.disk_space_threshold(),
-                                                                            self.EC2InstanceId),
+            AlarmDescription='DiskSpaceUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(
+                self.disk_space_threshold(),
+                self.EC2InstanceId, self.AutoScalingGroupName),
             OKActions=[
                 self.cloudwatch_alarms_sns()
             ],
@@ -108,7 +114,9 @@ class AutoScalingLifeCycleEvent:
         metric = self.cloudwatch().Metric('System/Linux', 'MemoryUtilization')
         metric.put_alarm(
             AlarmName=self.memory_utilization_alarm_name(),
-            AlarmDescription='MemoryUtilization {0} > actual@{1}'.format(self.memory_threshold(), self.EC2InstanceId),
+            AlarmDescription='MemoryUtilization {0} > actual@{1} AutoScalingGroup: {3}'.format(self.memory_threshold(),
+                                                                                               self.EC2InstanceId,
+                                                                                               self.AutoScalingGroupName),
             OKActions=[
                 self.cloudwatch_alarms_sns()
             ],
